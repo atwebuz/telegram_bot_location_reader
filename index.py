@@ -6,7 +6,7 @@ from geopy.geocoders import Nominatim
 logging.basicConfig(level=logging.INFO)
 
 # Initialize bot and dispatcher
-TOKEN = '6991515761:AAHn-f6eZc7xRjenl-nfuuBAbXSNHJ_EjbY'
+TOKEN = 'YOUR_TOKEN'
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)
 
@@ -38,7 +38,7 @@ async def get_location_info(latitude, longitude):
     if location:
         address_info = {
             "Country": location.raw["address"].get("country"),
-            "Region": location.raw["address"].get("state"),
+            "Region": location.raw["address"].get("state") or location.raw["address"].get("county"),
             "City": location.raw["address"].get("city"),
             "Street": location.raw["address"].get("road"),
             "Description": location.address
@@ -46,6 +46,7 @@ async def get_location_info(latitude, longitude):
         return "\n".join([f"{key}: {value}" for key, value in address_info.items()])
     else:
         return "Location information not available."
+
 
 if __name__ == '__main__':
     # Start the bot
